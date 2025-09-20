@@ -40,7 +40,7 @@ FEATURES = [
 # int: suugest_intの係数、float: suggest_floatの係数（3番目はstep, 4番目はlog）
 # log: Trueの場合、setpは無視される
 # enque: enque_trialの値（複数あれば複数回実行）
-DIRECTION = "minimize"  # 'maximize' or 'minimize'
+DIRECTION = "maximize"  # 'maximize' or 'minimize'
 PARAMS = {
     "AHC_PARAMS_SAMPLE1": {"int": [0, 1000], "enque": [500]},
     "AHC_PARAMS_SAMPLE2": {"float": [0.0, 1.0], "enque": [0.5]},
@@ -361,9 +361,7 @@ class Objective:
         if not os.path.isfile(result_file):
             self.dbg_(f"Creating {result_file} ...")
             with open(result_file, "w") as f:
-                f.write(
-                    "raw,100000000,https://img.atcoder.jp/ahc_standings/usage.html\n"
-                )
+                f.write("raw,0,https://img.atcoder.jp/ahc_standings/usage.html\n")
         # 結果をresult.csvに書き出す（追記）
         study_name = f'{time.strftime("%Y%m%d-%H%M%S")}'
         with open(result_file, "a") as f:
