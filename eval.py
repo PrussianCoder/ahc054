@@ -26,7 +26,7 @@ import optunahub
 import ray
 
 # 条件にあわせて以下を変更する（通常テスト用）
-LANGUAGE = "Rust"  # 'Python' or 'Rust'
+LANGUAGE = "Python"  # 'Python' or 'Rust'
 FEATURES = [
     None,
     "K",
@@ -49,27 +49,24 @@ PARAMS = {
 
 
 # 以下は設定変更不要なはす
-TESTER = "../target/release/tester"  # インタラクティブの場合
+TESTER = "tools/target/release/tester"  # インタラクティブの場合
 if not os.path.isfile(TESTER):
     TESTER = ""  # 通常の場合
 
 if LANGUAGE == "Python":
-    TESTEE_SOURCE = "main.py"  # Pythonの場合
-    TESTEE = f"pypy3 {TESTEE_SOURCE}"  # Pythonの場合
+    # TESTEE_SOURCE and TESTEE will be set dynamically based on args.executable
+    TESTEE_SOURCE = None  # Will be set in compile function
+    TESTEE = None  # Will be set in compile function
     TESTEE_COMPILE = None  # Pythonの場合
 elif LANGUAGE == "Rust":
-    TESTEE_NAME = "a"
-    TESTEE_SOURCE = f"src/bin/{TESTEE_NAME}.rs"  # Rustの場合
-    TESTEE = (
-        f'../target/release/{os.getcwd().split("/")[-1]}-{TESTEE_NAME}'  # Rustの場合
-    )
-    TESTEE_COMPILE = (
-        f'cargo build -r --bin {os.getcwd().split("/")[-1]}-{TESTEE_NAME}'  # Rustの場合
-    )
+    TESTEE_NAME = "tester"
+    TESTEE_SOURCE = f"tools/src/bin/{TESTEE_NAME}.rs"  # Rustの場合
+    TESTEE = f"tools/target/release/{TESTEE_NAME}"  # Rustの場合
+    TESTEE_COMPILE = f"cd tools && cargo build -r --bin {TESTEE_NAME}"  # Rustの場合
 
-SCORER = "../target/release/vis"  # スコア計算ツール
+SCORER = "tools/target/release/vis"  # スコア計算ツール
 if not os.path.isfile(SCORER):
-    SCORER = "../target/release/score"  # スコア計算ツール（候補その2）
+    SCORER = "tools/target/release/score"  # スコア計算ツール（候補その2）
     if not os.path.isfile(SCORER):
         SCORER = ""  # 存在しない場合
 TIMEOUT = 30
@@ -164,9 +161,9 @@ class SingleTest:
                         print(f"{RED}{line}{NORMAL}")
                     for line in cp.stdout.rstrip().split("\n"):
                         print(f"{RED}{line}{NORMAL}")
-                    score = SCORE_RE
+                    score = 0  # エラー時はスコアを0に設定
             else:
-                score = SCORE_RE
+                score = 0  # エラー時はスコアを0に設定
         comment = get_special_comment_from_last_logs(stderr.rstrip(), "Comment")
         return self.id, (score, duration, comment)
 
@@ -383,6 +380,13 @@ def parser():
         description="Tester driver for AtCoder Heuristic Contest"
     )
     parser.add_argument(
+        "executable",
+        nargs="?",
+        type=str,
+        help="executable code to test (e.g., main.py, solution.py)",
+        default="main.py",
+    )
+    parser.add_argument(
         "-s",
         "--specified",
         nargs="*",
@@ -414,21 +418,33 @@ def parser():
 
 # 提出プログラムのソースが更新されていたらコンパイルする
 def compile(args):
-    testee_source = "-".join(
-        TESTEE_SOURCE.split("-")[:-1]
-        + [TESTEE_SOURCE.split("-")[-1].replace("a", args.testee)]
-    )
-    testee_compile = (
-        "-".join(
-            TESTEE_COMPILE.split("-")[:-1]
-            + [TESTEE_COMPILE.split("-")[-1].replace("a", args.testee)]
+    global TESTEE_SOURCE, TESTEE
+
+    if LANGUAGE == "Python":
+        # Set TESTEE_SOURCE and TESTEE based on executable argument
+        TESTEE_SOURCE = args.executable
+        TESTEE = f"python3 {TESTEE_SOURCE}"
+        testee_source = TESTEE_SOURCE
+        testee = TESTEE
+        testee_compile = None
+    else:
+        # For Rust, use the original logic
+        testee_source = "-".join(
+            TESTEE_SOURCE.split("-")[:-1]
+            + [TESTEE_SOURCE.split("-")[-1].replace("a", args.testee)]
         )
-        if TESTEE_COMPILE
-        else None
-    )
-    testee = "-".join(
-        TESTEE.split("-")[:-1] + [TESTEE.split("-")[-1].replace("a", args.testee)]
-    )
+        testee_compile = (
+            "-".join(
+                TESTEE_COMPILE.split("-")[:-1]
+                + [TESTEE_COMPILE.split("-")[-1].replace("a", args.testee)]
+            )
+            if TESTEE_COMPILE
+            else None
+        )
+        testee = "-".join(
+            TESTEE.split("-")[:-1] + [TESTEE.split("-")[-1].replace("a", args.testee)]
+        )
+
     assert os.path.isfile(
         testee_source
     ), f"{RED}Source file {testee_source} not found.{NORMAL}"
