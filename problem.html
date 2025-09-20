@@ -1,0 +1,1893 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>A - Treant&#39;s Forest</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="ja">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RC512FD18N"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('set', 'user_properties', {
+			
+				'login_status': 'logged_in',
+			
+		});
+		gtag('config', 'G-RC512FD18N');
+	</script>
+
+	
+	<meta name="description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。">
+	<meta name="author" content="AtCoder Inc.">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="A - Treant&#39;s Forest" />
+	<meta property="og:description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/ahc054/tasks/ahc054_a" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="A - Treant&#39;s Forest" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/d7f7070/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/d7f7070/css/base.css">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="//img.atcoder.jp/public/d7f7070/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/d7f7070/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/d7f7070/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/d7f7070/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/d7f7070/js/cdn/moment_js-ja.js"></script>
+	<script>
+		var LANG = "ja";
+		var userScreenName = "PrussianBlue";
+		var csrfToken = "n4WjZrD+BXNfCmXu1Mc6349ISiYzCuPFkrmMFbpvvhA="
+	</script>
+	<script src="//img.atcoder.jp/public/d7f7070/js/utils.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/d7f7070/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/d7f7070/css/contest.css" rel="stylesheet" />
+		<script>
+			var contestScreenName = "ahc054";
+			var remainingText = "残り時間";
+			var countDownText = "開始まであと";
+			var startTime = moment("2025-09-19T19:00:00+09:00");
+			var endTime = moment("2025-09-29T19:00:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<link href="//img.atcoder.jp/public/d7f7070/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/d7f7070/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/d7f7070/js/lib/select2.min.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/d7f7070/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/d7f7070/js/ace/ext-language_tools.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/d7f7070/js/cdn/run_prettify.js"></script>
+	
+	
+		<link rel="stylesheet" href="//img.atcoder.jp/public/d7f7070/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/d7f7070/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/d7f7070/js/cdn/auto-render.min.js"></script>
+		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
+		<script>
+			var katexOptions = {
+				delimiters: [
+					{left: "$$", right: "$$", display: true},
+					
+					{left: "\\(", right: "\\)", display: false},
+					{left: "\\[", right: "\\]", display: true}
+				],
+      	ignoredTags: ["script", "noscript", "style", "textarea", "code", "option"],
+				ignoredClasses: ["prettyprint", "source-code-for-copy"],
+				throwOnError: false
+			};
+			document.addEventListener("DOMContentLoaded", function() { renderMathInElement(document.body, katexOptions);});
+		</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="//img.atcoder.jp/public/d7f7070/js/base.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+	var __pParams = __pParams || [];
+	__pParams.push({client_id: '468', c_1: 'atcodercontest', c_2: 'ClientSite'});
+</script>
+<script type="text/javascript" src="https://cdn.d2-apps.net/js/tr.js" async></script>
+
+
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト開始</h4>
+			</div>
+			<div class="modal-body">
+				<p>ALGO ARTIS プログラミングコンテスト2025 夏（AtCoder Heuristic Contest 054）が開始されました。</p>
+			</div>
+			<div class="modal-footer">
+				
+					<a class="btn btn-primary" href='/contests/ahc054/tasks'>問題一覧ページへ移動</a>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト終了</h4>
+			</div>
+			<div class="modal-body">
+				<p>ALGO ARTIS プログラミングコンテスト2025 夏（AtCoder Heuristic Contest 054）は終了しました。</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/home"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/ahc054">ALGO ARTIS プログラミングコンテスト2025 夏（AtCoder Heuristic Contest 054）</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語 <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/ahc054/tasks/ahc054_a?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/ahc054/tasks/ahc054_a?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> PrussianBlue (Contestant) <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="/users/PrussianBlue"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> マイプロフィール</a></li>
+								<li class="divider"></li>
+								<li><a href="/settings"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> 基本設定</a></li>
+								<li><a href="/settings/icon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> アイコン設定</a></li>
+								<li><a href="/settings/password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> パスワードの変更</a></li>
+								<li><a href="/settings/fav"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> お気に入り管理</a></li>
+								
+								
+								
+								<li class="divider"></li>
+								<li><a href="javascript:void(form_logout.submit())"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> ログアウト</a></li>
+							</ul>
+						</li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fahc054%2Ftasks%2Fahc054_a">
+		<input type="hidden" name="csrf_token" value="n4WjZrD&#43;BXNfCmXu1Mc6349ISiYzCuPFkrmMFbpvvhA=" />
+	</form>
+	<div id="main-container" class="container"
+		 	style="padding-top:50px;">
+		
+
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">
+			
+				コンテスト時間:
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20250919T1900&p1=248' target='blank'><time class='fixtime fixtime-full'>2025-09-19 19:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20250929T1900&p1=248' target='blank'><time class='fixtime fixtime-full'>2025-09-29 19:00:00+0900</time></a> 
+				
+			
+		</small>
+		<small class="back-to-home pull-right"><a href="/home">AtCoderホームへ戻る</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href="/contests/ahc054"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> トップ</a></li>
+		
+			<li class="active"><a href="/contests/ahc054/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> 問題</a></li>
+		
+
+		
+			<li><a href="/contests/ahc054/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> 質問 <span id="clar-badge" class="badge" ></span></a></li>
+		
+
+		
+			<li><a href="/contests/ahc054/submit?taskScreenName=ahc054_a"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> 提出</a></li>
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 提出結果<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					
+					
+						<li><a href="/contests/ahc054/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 自分の提出</a></li>
+						
+						
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href="/contests/ahc054/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> 順位表</a></li>
+				
+			
+		
+
+		
+			<li><a href="/contests/ahc054/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> コードテスト</a></li>
+		
+
+		
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">
+			A - Treant&#39;s Forest
+			
+		</span>
+		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
+		<script>
+			$(function() {
+				var ts = $('#task-statement span.lang');
+				if (ts.children('span').size() <= 1) {
+					$('#task-lang-btn').hide();
+					ts.children('span').show();
+					return;
+				}
+
+				var REMEMBER_LB = 5;
+				var LS_KEY = 'task_lang';
+				var taskLang = getLS(LS_KEY) || '';
+				function isTaskLangSet(taskLang) { return taskLang === 'ja' || taskLang === 'en';}
+				if (isTaskLangSet(taskLang)) {
+					const params = new URLSearchParams(window.location.search);
+					if (params.get('lang')) {
+						setLS(LS_KEY, REMEMBER_LB);
+						taskLang = LANG;
+					}
+				} else {
+					taskLang = LANG;
+				}
+				ts.children('span.lang-' + taskLang).show();
+
+				$('#task-lang-btn span').click(function() {
+					var l = $(this).data('lang');
+					ts.children('span').hide();
+					ts.children('span.lang-' + l).show();
+
+					taskLang = getLS(LS_KEY) || '';
+					let changeTimes = 0;
+					if (isTaskLangSet(taskLang)) {
+						changeTimes = REMEMBER_LB;
+					} else {
+						changeTimes = parseInt(taskLang, 10);
+						if (isNaN(changeTimes)) changeTimes = 0;
+						changeTimes++;
+					}
+					if (changeTimes < REMEMBER_LB) setLS(LS_KEY, changeTimes);
+					else setLS(LS_KEY, l);
+				});
+			});
+		</script>
+		<hr/>
+		<p>
+			実行時間制限: 2 sec / メモリ制限: 1024 MiB
+			
+			
+		</p>
+
+		<div id="task-statement">
+			
+
+
+	
+	
+
+			<span class="lang">
+<span class="lang-ja">
+
+<div class="part">
+<section>
+<h3>ストーリー</h3><p>AtCoder王国の南には、通称「迷いの森」と呼ばれる、入るたびに道が変わる不思議な森が広がっている。
+この森には、見つけると幸せが訪れるという伝説の花 <em>Aura Amaryllis</em>（通称AA）が存在すると言われており、今日もその花を求めて冒険者がやってきた。</p>
+<p>迷いの森の真相は、木の魔物「トレント」が木に化けて冒険者を惑わせているというものである。
+トレントは迷っている冒険者から魔力を吸い取ることで生命を維持しており、できる限り長い時間、冒険者を森に留まらせたいと考えている。
+ただし、冒険者がAAにたどり着けなかった場合、「あの花は存在しなかった」という噂が広まり、それ以降誰も森に来なくなってしまう。
+そうなると魔力を得られなくなったトレントたちは、やがて死に絶えてしまうのだ。</p>
+<p>また、冒険者は道に迷わないよう、マッピングをしながら森を探索している。
+すでにマッピングされた場所にトレントを移動させてしまうと、それが本物の木ではなくトレントであることが冒険者に見破られ、切り倒されてしまう。
+このような事態は、何としても避けなければならない。</p>
+<p>トレントのボスであるあなたには、冒険者がAAにたどり着くまでの時間ができるだけ長くなるよう、冒険者の動きに応じてトレントたちの配置を適切に調整していくことが求められる。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p><var>N \times N</var> マスの森がある。
+左上のマスの座標を <var>(0, 0)</var> とし、下方向に <var>i</var>、右方向に <var>j</var> マス進んだ位置の座標を <var>(i, j)</var> とする。
+各マスは「空きマス」もしくは「木」のいずれかである。<var>N \times N</var> マスの範囲外は木で囲まれている。</p>
+<p>マス <var>(0, \lfloor \frac{N}{2} \rfloor)</var> は森の入口であり、空きマスである。
+マス <var>(t_i, t_j)</var> に伝説の花が咲いており、そこも空きマスである。</p>
+<p>伝説の花を求めて、冒険者が森へやってきた。
+冒険者は、公開情報である <strong>現在位置</strong> と <strong>確認済みマス</strong>、非公開情報である <strong>目的地</strong> の3つの状態を持つ。
+未確認のマスをすべて空きマスであると仮定した森の地図を、<strong>暫定地図</strong> と呼ぶ。</p>
+<p>初期状態では、<strong>現在位置</strong> は森の入口、<strong>確認済みマス</strong> はその1マスと <var>N\times N</var> マスの外部すべて、<strong>目的地</strong> は未定である。
+冒険者の行動は毎ターン、以下の順に処理される。</p>
+<ol>
+<li><strong>現在位置</strong> に伝説の花がある場合、目的を達成し、行動を終了する。</li>
+<li>上下左右それぞれの方向に対し、<strong>現在位置</strong> からその方向に進んだ最初の「木」のマスまで（その木のマスを含む）のすべての未確認マスを <strong>確認済みマス</strong> に追加する。</li>
+<li>伝説の花が <strong>確認済みマス</strong> に含まれている場合、<strong>目的地</strong> をそのマスに設定する。</li>
+<li><strong>目的地</strong> が未定でなく、<strong>暫定地図</strong> において <strong>目的地</strong> が現在位置から空きマスのみを通って到達不能な場合、<strong>目的地</strong> を未定に戻す。</li>
+<li><strong>目的地</strong> が未定であるか、伝説の花以外の <strong>確認済みマス</strong> にある場合、<strong>暫定地図</strong> において、現在位置から空きマスのみを通って到達可能な未確認マスの中から一様ランダムに1つ選び、それを <strong>目的地</strong> に設定する（そのようなマスが存在しない場合、後述するように <span class='label label-warning' data-toggle='tooltip' data-placement='top' title="不正解">WA</span> となる）。</li>
+<li><strong>暫定地図</strong> において、各マスから空きマスのみを通って <strong>目的地</strong> へ到達する最短距離を計算する。現在位置に隣接する空きマスのうち、<strong>目的地</strong> までの最短距離がより短くなるマスに移動する。そのようなマスが複数ある場合、上下左右の順に優先度をつけ、先に挙げられた方向を選択する。</li>
+</ol>
+<p>木の魔物「トレント」のボスであるあなたの目的は、トレントたちに指示を出して冒険者を迷わせ、伝説の花にたどり着くまでのターン数をできるだけ長くすることである。
+あなたは毎ターンの開始前に、<strong>確認済みマス</strong> でない任意個の空きマスを選び、それぞれに1体ずつトレントを配置することができる。
+トレントを配置したマスは、それ以降「空きマス」ではなく「木」として扱われ、動かすことはできない。</p>
+<p>ただし、森の入口から伝説の花まで、空きマスのみを通る経路が必ず1つ以上存在しなければならない。
+そのような経路が存在しない場合、解答は <span class='label label-warning' data-toggle='tooltip' data-placement='top' title="不正解">WA</span> となる。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>得点</h3><p>冒険者が森の入口から入り、伝説の花にたどり着くまでにかかった移動回数が、そのテストケースにおける絶対スコアとなる。
+絶対スコアは大きいほど良い。</p>
+<p>各テストケース毎に、<var>\mathrm{round}(10^9\times \frac{自身の絶対スコア}{全参加者中の最大絶対スコア})</var> の<font color="red"><strong>相対評価スコア</strong></font>が得られ、その和が提出の得点となる。</p>
+<p>最終順位はコンテスト終了後に実施されるより多くの入力に対するシステムテストにおける得点で決定される。
+暫定テスト、システムテストともに、一部のテストケースで不正な出力や制限時間超過をした場合、そのテストケースの相対評価スコアは0点となり、そのテストケースにおいては「全参加者中の最大絶対スコア」の計算から除外される。
+システムテストは<font color="red"><strong> <span class="label label-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="コンパイルエラー">CE</span> 以外の結果を得た一番最後の提出</strong></font>に対してのみ行われるため、最終的に提出する解答を間違えないよう注意せよ。</p>
+<h4>テストケース数</h4>
+<ul>
+<li>暫定テスト: 100個</li>
+<li>システムテスト: 3000個、コンテスト終了後に <a href="https://img.atcoder.jp/ahc054/seeds.txt">seeds.txt</a> (sha256=f46e04db0ec8f80d641bbc8e166b1d2f4050a340b356acea1adce1a41a0a7fc8) を公開</li>
+</ul>
+<h4>相対評価システムについて</h4>
+<p>暫定テスト、システムテストともに、<span class="label label-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="コンパイルエラー">CE</span> 以外の結果を得た一番最後の提出のみが順位表に反映される。
+相対評価スコアの計算に用いられる各テストケース毎の全参加者中の最大絶対スコアの算出においても、順位表に反映されている最終提出のみが用いられる。</p>
+<p>順位表に表示されているスコアは相対評価スコアであり、新規提出があるたびに、相対評価スコアが再計算される。
+一方、提出一覧から確認出来る各提出のスコアは各テストケース毎の絶対スコアをそのまま足し合わせたものであり、相対評価スコアは表示されない。
+最新以外の提出の、現在の順位表における相対評価スコアを知るためには、再提出が必要である。
+不正な出力や制限時間超過をした場合、提出一覧から確認出来るスコアは0となるが、順位表には正解したテストケースに対する相対スコアの和が表示されている。</p>
+<h4>実行時間について</h4>
+<p>実行時間には多少のブレが生じます。
+また、システムテストでは同時に大量の実行を行うため、暫定テストに比べて数%程度実行時間が伸びる現象が確認されています。
+そのため、実行時間制限ギリギリの提出がシステムテストで<span class='label label-warning' data-toggle='tooltip' data-placement='top' title="実行時間制限超過">TLE</span>となる可能性があります。
+プログラム内で時間を計測して処理を打ち切るか、実行時間に余裕を持たせるようお願いします。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>入出力</h3><p>まずはじめに、以下の情報が標準入力から与えられる。</p>
+<pre><var>N</var> <var>t_i</var> <var>t_j</var>
+<var>b_{0,0}\cdots b_{0,N-1}</var>
+<var>\vdots</var>
+<var>b_{N-1,0}\cdots b_{N-1,N-1}</var>
+</pre>
+<ul>
+<li>森の縦横の幅 <var>N</var> は <var>20 \leq N \leq 40</var> を満たす。</li>
+<li>伝説の花の座標 <var>(t_i, t_j)</var> は <var>0 \leq t_i, t_j \leq N - 1</var> を満たし、森の入口 <var>(0, \lfloor \frac{N}{2} \rfloor)</var> とのマンハッタン距離が <var>5</var> 以上であることが保証されている。</li>
+<li><var>b_{i,0} \cdots b_{i,N-1}</var> は長さ <var>N</var> の文字列であり、その <var>j</var> 文字目 <var>b_{i,j}</var> は、マス <var>(i, j)</var> が空きマスであれば <code>.</code>、木であれば <code>T</code> を表す。</li>
+<li>すべての空きマスは、森の入口 <var>(0, \lfloor \frac{N}{2} \rfloor)</var> から空きマスのみを通って到達可能であることが保証されている。</li>
+</ul>
+<p>次に、以下の処理を繰り返す。
+まず、各ターンの開始時に、冒険者の現在位置と、前のターンに新たに確認済みとなったマスが、以下の形式で標準入力から与えられる。</p>
+<pre><var>p_i</var> <var>p_j</var>
+<var>n</var> <var>x_0</var> <var>y_0</var> <var>\cdots</var> <var>x_{n-1}</var> <var>y_{n-1}</var>
+</pre>
+<ul>
+<li><var>(p_i, p_j)</var> は冒険者の現在位置を表す。</li>
+<li><var>n</var> は前のターンに新たに確認済みとなったマスの個数であり、<var>(x_k, y_k)</var> はその <var>k</var> 番目のマスの座標である。</li>
+<li>最初のターンにおいては、<var>(p_i, p_j) = (0, \lfloor \frac{N}{2} \rfloor)</var>、<var>n = 1</var>、<var>(x_0, y_0) = (0, \lfloor \frac{N}{2} \rfloor)</var> である。</li>
+</ul>
+<p><var>(p_i, p_j) = (t_i, t_j)</var> の場合、冒険者が伝説の花に到達したことを意味し、繰り返しを終了してプログラムも終了する。<br />
+そうでない場合、このターンの開始前に新たにトレントを配置するマスの集合を <var>(x_0', y_0'), \cdots, (x_{m-1}', y_{m-1}')</var> とし、以下の形式で標準出力に出力せよ。</p>
+<pre><var>m</var> <var>x_0'</var> <var>y_0'</var> <var>\cdots</var> <var>x_{m-1}'</var> <var>y_{m-1}'</var>
+</pre>
+<p><font color="red"><strong>出力の後には改行をし、更に標準出力を flush しなければならない。</strong></font>
+そうしない場合、<span class='label label-warning' data-toggle='tooltip' data-placement='top' title="実行時間制限超過">TLE</span>となる可能性がある。</p>
+<p><a href="https://img.atcoder.jp/ahc054/YDAxDRZr.html?lang=ja&seed=0&output=sample">例を見る</a></p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>入力生成方法</h3><p><var>L</var> 以上 <var>U</var> 以下の整数値を一様ランダムに生成する関数を <var>\mathrm{rand}(L, U)</var> とする。</p>
+<p><var>N = \mathrm{rand}(20, 40)</var> により、森のサイズ <var>N</var> を生成する。</p>
+<p>すべて空きマスの状態から開始し、以下の手順で木の配置を生成する。<br />
+まず、木の本数の上限 <var>K</var> を <var>K = \max(1, \mathrm{rand}(0, \lfloor N^2 / 6 \rfloor))</var> により生成する。<br />
+森の入口を除いた <var>N^2 - 1</var> 個のマスをランダムな順序で <var>(i_0, j_0), \cdots, (i_{N^2 - 2}, j_{N^2 - 2})</var> に並べ、各 <var>k</var> に対して順に以下の処理を行う。</p>
+<p><var>(i_k, j_k)</var> に木を仮に置いたうえで、すべての空きマスが森の入口から到達可能かを判定する。到達不能な場合は、木を置くのを取りやめる。<br />
+置いた木の本数が <var>K</var> に達した時点で、処理を中断する。</p>
+<p>最後に、伝説の花の座標 <var>(t_i, t_j)</var> を、条件を満たす空きマスの中から一様ランダムに選択する。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>ツール(入力ジェネレータ・ローカルテスタ・ビジュアライザ)</h3><ul>
+<li><a href="https://img.atcoder.jp/ahc054/YDAxDRZr.html?lang=ja">Web版</a>: ローカル版より高性能でアニメーション表示が可能です。</li>
+<li><a href="https://img.atcoder.jp/ahc054/YDAxDRZr.zip">ローカル版</a>: 使用するには<a href="https://www.rust-lang.org/ja">Rust言語</a>のコンパイル環境をご用意下さい。<ul>
+<li><a href="https://img.atcoder.jp/ahc054/YDAxDRZr_windows.zip">Windows用のコンパイル済みバイナリ</a>: Rust言語の環境構築が面倒な方は代わりにこちらをご利用下さい。</li>
+</ul>
+</li>
+</ul>
+<p>コンテスト期間中に、ビジュアライズ結果の共有や、解法・考察に関する言及は禁止されています。ご注意下さい。</p>
+<h4>ツールで用いられる入出力ファイルの仕様</h4>
+<p>ローカルテスタに与える入力ファイルは以下の形式を用いている。</p>
+<pre><var>N</var> <var>t_i</var> <var>t_j</var>
+<var>b_{0,0}\cdots b_{0,N-1}</var>
+<var>\vdots</var>
+<var>b_{N-1,0}\cdots b_{N-1,N-1}</var>
+<var>q_i^0</var> <var>q_j^0</var>
+<var>\vdots</var>
+<var>q_i^{N^2-2}</var> <var>q_j^{N^2-2}</var>
+</pre>
+<p>末尾に追加されている <var>(q_i^k, q_j^k)</var> は、<var>k</var> 回目の目的地を表し、冒険者が目的地を選択する際にはこの順番で見ていき、条件を満たすものが順に選ばれる。
+<var>q</var> は森の入口を除いた <var>N^2 - 1</var> 個のマスをランダムな順序で並べることで生成されている。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>サンプルプログラム (Python)</h3><details>
+Python による解答例を示す。
+このプログラムでは、確認済みとなったマスの管理を行いつつ、トレントは一切配置しない。
+
+<pre class="prettyprint linenums">
+N, ti, tj = map(int, input().split())
+b = [input() for _ in range(N)]
+revealed = [[False] * N for _ in range(N)]
+while True:
+    pi, pj = map(int, input().split())
+    parts = input().split()
+    n = int(parts[0])
+    xy = list(map(int, parts[1:]))
+    for k in range(n):
+        x = xy[2 * k]
+        y = xy[2 * k + 1]
+        revealed[x][y] = True
+    if pi == ti and pj == tj:
+        break
+    print(0, flush=True)
+</pre>
+</details>
+
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre style="max-height:200px;overflow-y:scroll">20 16 8
+........T..T........
+..............T.....
+T...................
+........T...........
+...T................
+.....T..............
+..........T.........
+....................
+......T.T.........T.
+....T..........T..T.
+.T..T........T.....T
+........T...........
+....................
+.....TT.............
+.................T..
+....................
+..........T.........
+............T.....T.
+....................
+...........T.TTT....
+16 3
+1 7
+8 6
+8 13
+3 1
+13 2
+16 6
+2 5
+18 10
+10 9
+19 2
+7 10
+6 12
+4 7
+10 4
+10 7
+18 8
+12 2
+14 2
+3 7
+4 19
+14 7
+18 5
+5 4
+4 2
+14 16
+11 4
+0 3
+0 0
+8 18
+19 17
+11 5
+18 17
+18 12
+10 1
+8 7
+17 3
+16 18
+16 15
+0 5
+13 13
+14 1
+8 9
+19 10
+17 4
+15 9
+9 11
+1 16
+4 1
+10 5
+1 14
+17 7
+17 10
+11 10
+8 5
+6 9
+4 5
+4 3
+12 9
+6 2
+4 17
+8 2
+19 19
+12 1
+2 4
+8 10
+13 7
+5 16
+2 17
+5 0
+16 0
+14 10
+6 13
+18 13
+12 7
+0 12
+11 9
+8 15
+10 18
+11 11
+16 11
+5 12
+9 15
+7 13
+15 1
+16 9
+7 9
+15 10
+1 13
+7 16
+7 18
+3 10
+1 2
+18 1
+15 11
+5 8
+6 16
+8 12
+2 3
+18 14
+5 14
+13 10
+2 9
+17 12
+0 4
+11 3
+13 6
+17 16
+14 4
+16 5
+14 15
+17 1
+16 8
+3 11
+12 11
+8 19
+1 5
+5 7
+12 16
+0 2
+17 0
+19 8
+7 11
+10 2
+3 6
+0 16
+5 1
+4 16
+19 9
+7 6
+3 9
+6 11
+16 2
+13 3
+19 15
+12 13
+6 10
+6 7
+16 12
+15 7
+13 18
+8 14
+19 7
+4 18
+15 14
+11 13
+4 12
+11 16
+17 8
+2 14
+12 19
+15 5
+9 19
+12 5
+13 19
+3 13
+9 16
+10 17
+7 14
+3 0
+6 5
+17 19
+9 17
+15 2
+1 17
+17 6
+2 13
+9 8
+5 19
+9 2
+8 8
+15 16
+15 12
+15 4
+10 6
+4 8
+7 19
+10 19
+18 9
+9 0
+10 12
+16 4
+15 17
+1 12
+18 0
+13 16
+14 5
+9 5
+13 9
+1 11
+2 0
+14 12
+14 14
+2 12
+7 8
+1 18
+5 13
+9 9
+10 13
+16 16
+3 4
+17 5
+0 7
+5 3
+17 2
+11 12
+13 17
+18 3
+1 19
+1 1
+6 17
+12 6
+15 0
+8 3
+11 17
+8 1
+14 0
+15 8
+7 3
+14 19
+2 15
+15 18
+17 14
+2 6
+3 3
+12 3
+10 16
+6 8
+3 8
+14 9
+10 14
+18 18
+3 15
+0 15
+11 15
+18 16
+5 15
+3 17
+16 19
+11 6
+5 2
+13 8
+12 15
+5 10
+6 0
+7 0
+5 5
+4 10
+7 17
+11 8
+6 1
+4 6
+19 11
+7 5
+10 15
+18 2
+18 11
+2 1
+12 0
+0 9
+5 18
+13 14
+15 6
+9 18
+9 3
+15 15
+4 11
+2 2
+13 0
+8 0
+9 6
+9 12
+9 13
+9 7
+5 6
+4 14
+12 17
+2 19
+2 18
+14 17
+8 11
+6 18
+3 14
+5 17
+11 19
+1 3
+15 3
+10 11
+18 6
+19 4
+17 9
+14 11
+19 18
+17 15
+0 13
+11 14
+3 19
+7 7
+4 15
+9 1
+12 10
+2 11
+19 16
+9 14
+4 0
+6 14
+10 0
+17 17
+12 4
+17 13
+16 10
+13 1
+2 7
+19 6
+12 12
+0 11
+7 12
+19 13
+0 6
+12 8
+19 1
+14 13
+1 6
+11 1
+0 1
+0 18
+7 1
+14 8
+6 19
+4 4
+1 15
+8 17
+5 11
+5 9
+16 14
+10 3
+13 15
+0 14
+1 10
+7 4
+3 2
+3 5
+6 6
+6 4
+3 16
+12 14
+15 13
+18 4
+19 12
+17 11
+15 19
+6 15
+13 4
+16 7
+4 13
+7 2
+19 3
+12 18
+1 0
+16 17
+10 8
+11 18
+8 4
+18 7
+6 3
+19 0
+19 14
+16 1
+16 13
+1 4
+1 8
+0 19
+18 15
+2 10
+0 17
+14 18
+7 15
+1 9
+9 4
+14 3
+11 0
+14 6
+13 11
+3 12
+11 2
+2 8
+4 9
+3 18
+8 16
+19 5
+2 16
+11 7
+13 5
+17 18
+13 12
+10 10
+0 8
+9 10
+18 19
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre style="max-height:200px;overflow-y:scroll">1 1 10
+0 
+1 1 8
+2 2 8 2 10
+0 
+0 
+0 
+0 
+0 
+0 
+0 
+0 
+0 
+0 
+0 
+0 
+0 
+0 
+</pre></section>
+</div>
+</span>
+<span class="lang-en">
+
+<div class="part">
+<section>
+<h3>Story</h3><p>To the south of the Kingdom of AtCoder lies a mysterious forest commonly known as the "Lost Forest," where the paths change every time one enters.
+It is said that within this forest blooms a legendary flower called <em>Aura Amaryllis</em> (commonly abbreviated as AA), which brings happiness to those who find it. Even today, adventurers arrive in search of this flower.</p>
+<p>The true nature of the Lost Forest is that tree monsters known as "Treants" disguise themselves as trees to confuse adventurers. Treants sustain their lives by absorbing magical energy from lost adventurers, so they aim to keep the adventurers in the forest for as long as possible.
+However, if an adventurer fails to reach the AA, rumors will spread that "the flower never existed," and no one will enter the forest again. If that happens, the Treants will no longer be able to obtain magical energy and will eventually perish.</p>
+<p>Furthermore, adventurers explore the forest while mapping it to avoid getting lost. If a Treant moves to a location that has already been mapped, the adventurer will realize that it is not a real tree but a Treant in disguise and will cut it down. This situation must be avoided at all costs.</p>
+<p>As the boss of the Treants, your role is to adjust the placement of the Treants in response to the adventurer's movements to ensure that it takes longer for the adventurer to reach the AA.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>There is a forest consisting of an <var>N \times N</var> grid of cells.
+The coordinates of the top-left cell are <var>(0, 0)</var>. The cell located <var>i</var> cells down and <var>j</var> cells to the right has coordinates <var>(i, j)</var>.
+Each cell is either an "empty cell" or a "tree". The area outside the <var>N \times N</var> grid is surrounded by trees.</p>
+<p>The cell <var>(0, \lfloor \frac{N}{2} \rfloor)</var> is the entrance to the forest and is an empty cell.
+The legendary flower blooms at cell <var>(t_i, t_j)</var>, which is also an empty cell.</p>
+<p>An adventurer has entered the forest in search of the legendary flower.
+The adventurer has three states: the <strong>current position</strong> and the <strong>revealed cells</strong>, which are public information, and the <strong>destination</strong>, which is hidden.
+A map of the forest assuming all unrevealed cells are empty is called the <strong>tentative map</strong>.</p>
+<p>Initially, the <strong>current position</strong> is the forest entrance, the <strong>revealed cells</strong> include only that one cell and all cells outside the <var>N \times N</var> grid, and the <strong>destination</strong> is unset.
+Each turn, the adventurer's actions are processed in the following order:</p>
+<ol>
+<li>If the legendary flower is at the <strong>current position</strong>, the goal is achieved and the adventurer stops moving.</li>
+<li>For each of the four directions (up, down, left, right), add to the <strong>revealed cells</strong> all unrevealed cells from the <strong>current position</strong> up to and including the first "tree" cell encountered in that direction.</li>
+<li>If the legendary flower is included in the <strong>revealed cells</strong>, set the <strong>destination</strong> to that cell.</li>
+<li>If the <strong>destination</strong> is set but is unreachable from the current position in the <strong>tentative map</strong> using only empty cells, unset the <strong>destination</strong>.</li>
+<li>If the <strong>destination</strong> is unset or is a cell in the <strong>revealed cells</strong> other than the legendary flower, choose one cell uniformly at random from the unrevealed cells that are reachable from the current position via empty cells in the <strong>tentative map</strong>, and set it as the <strong>destination</strong> (if no such cell exists, this will result in a <span class='label label-warning' data-toggle='tooltip' data-placement='top' title="Incorrect">WA</span>, as described below).</li>
+<li>In the <strong>tentative map</strong>, compute the shortest distance to the <strong>destination</strong> using only empty cells. Move to an adjacent empty cell that shortens the distance to the <strong>destination</strong>. If multiple such cells exist, choose the one in the order of preference: up, down, left, right.</li>
+</ol>
+<p>As the boss of the tree monsters known as "Treants," your goal is to direct the Treants to confuse the adventurer and maximize the number of turns it takes to reach the legendary flower.</p>
+<p>At the beginning of each turn, you may choose any number of empty cells that are not part of the <strong>revealed cells</strong> and place one Treant in each.
+Cells where Treants are placed are no longer considered "empty" and are treated as "trees" from that point onward. Treants cannot be moved once placed.</p>
+<p>You must ensure that there is always at least one path from the forest entrance to the legendary flower consisting only of empty cells.
+If no such path exists, your solution will result in a <span class='label label-warning' data-toggle='tooltip' data-placement='top' title="Wrong Answer">WA</span>.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Scoring</h3><p>The number of moves the adventurer takes to reach the legendary flower from the forest entrance is the absolute score for that test case.<br />
+The higher the absolute score, the better.</p>
+<p>For each test case, we compute the <font color="red"><strong>relative score</strong></font> <var>\mathrm{round}(10^9\times \frac{\mathrm{YOUR}}{\mathrm{MAX}})</var>, where YOUR is your absolute score and MAX is the highest absolute score among all competitors obtained on that test case. The score of the submission is the sum of the relative scores.</p>
+<p>The final ranking will be determined by the system test with more inputs which will be run after the contest is over.
+In both the provisional/system test, if your submission produces illegal output or exceeds the time limit for some test cases, only the score for those test cases will be zero, and your submission will be excluded from the MAX calculation for those test cases.</p>
+<p>The system test will be performed only for <font color="red"><strong>the last submission which received a result other than <span class="label label-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="Compilation Error">CE</span> </strong></font>.
+Be careful not to make a mistake in the final submission.</p>
+<h4>Number of test cases</h4>
+<ul>
+<li>Provisional test: 100</li>
+<li>System test: 3000. We will publish <a href="https://img.atcoder.jp/ahc054/seeds.txt">seeds.txt</a> (sha256=f46e04db0ec8f80d641bbc8e166b1d2f4050a340b356acea1adce1a41a0a7fc8) after the contest is over.</li>
+</ul>
+<h4>About relative evaluation system</h4>
+<p>In both the provisional/system test, the standings will be calculated using only the last submission which received a result other than <span class="label label-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="Compilation Error">CE</span>.
+Only the last submissions are used to calculate the MAX for each test case when calculating the relative scores.</p>
+<p>The scores shown in the standings are relative, and whenever a new submission arrives, all relative scores are recalculated.
+On the other hand, the score for each submission shown on the submissions page is the sum of the absolute score for each test case, and the relative scores are not shown.
+In order to know the relative score of submission other than the latest one in the current standings, you need to resubmit it.
+If your submission produces illegal output or exceeds the time limit for some test cases, the score shown on the submissions page will be 0, but the standings show the sum of the relative scores for the test cases that were answered correctly.</p>
+<h4>About execution time</h4>
+<p>Execution time may vary slightly from run to run.
+In addition, since system tests simultaneously perform a large number of executions, it has been observed that execution time increases by several percent compared to provisional tests.
+For these reasons, submissions that are very close to the time limit may result in <span class='label label-warning' data-toggle='tooltip' data-placement='top' title="Time Limit Exceeded">TLE</span> in the system test.
+Please measure the execution time in your program to terminate the process, or have enough margin in the execution time.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Input and Output</h3><p>At the beginning, the following information is given via Standard Input:</p>
+<pre><var>N</var> <var>t_i</var> <var>t_j</var>
+<var>b_{0,0}\cdots b_{0,N-1}</var>
+<var>\vdots</var>
+<var>b_{N-1,0}\cdots b_{N-1,N-1}</var>
+</pre>
+<ul>
+<li><var>N</var> is the width and height of the forest and satisfies <var>20 \leq N \leq 40</var>.</li>
+<li><var>(t_i, t_j)</var> is the coordinate of the legendary flower and satisfies <var>0 \leq t_i, t_j \leq N - 1</var>, with a guaranteed Manhattan distance of at least 5 from the forest entrance <var>(0, \lfloor \frac{N}{2} \rfloor)</var>.</li>
+<li><var>b_{i,0} \cdots b_{i,N-1}</var> is a string of length <var>N</var>, where the <var>j</var>-th character <var>b_{i,j}</var> is <code>.</code> if cell <var>(i, j)</var> is an empty cell, and <code>T</code> if it is a tree.</li>
+<li>It is guaranteed that every empty cell is reachable from the forest entrance <var>(0, \lfloor \frac{N}{2} \rfloor)</var> by traversing only through empty cells.</li>
+</ul>
+<p>Next, repeat the following process.<br />
+At the beginning of each turn, the adventurer's current position and the cells newly revealed in the previous turn are given via Standard Input in the following format:</p>
+<pre><var>p_i</var> <var>p_j</var>
+<var>n</var> <var>x_0</var> <var>y_0</var> <var>\cdots</var> <var>x_{n-1}</var> <var>y_{n-1}</var>
+</pre>
+<ul>
+<li><var>(p_i, p_j)</var> is the adventurer's current position.</li>
+<li><var>n</var> is the number of cells that were newly revealed in the previous turn, and <var>(x_k, y_k)</var> represents the coordinates of the <var>k</var>-th such cell.</li>
+<li>On the first turn, <var>(p_i, p_j) = (0, \lfloor \frac{N}{2} \rfloor)</var>, <var>n = 1</var>, and <var>(x_0, y_0) = (0, \lfloor \frac{N}{2} \rfloor)</var>.</li>
+</ul>
+<p>If <var>(p_i, p_j) = (t_i, t_j)</var>, it means the adventurer has reached the legendary flower. In that case, terminate the loop and end the program.<br />
+Otherwise, let <var>(x_0', y_0'), \cdots, (x_{m-1}', y_{m-1}')</var> be the set of cells where Treants will be placed before the start of this turn, and output the following format to Standard Output:</p>
+<pre><var>m</var> <var>x_0'</var> <var>y_0'</var> <var>\cdots</var> <var>x_{m-1}'</var> <var>y_{m-1}'</var>
+</pre>
+<p><font color="red"><strong>The output must be followed by a new line, and you have to flush Standard Output.</strong></font>
+Otherwise, the submission might be judged as <span class='label label-warning' data-toggle='tooltip' data-placement='top' title="Time Limit Exceeded">TLE</span>.</p>
+<p><a href="https://img.atcoder.jp/ahc054/YDAxDRZr.html?lang=en&seed=0&output=sample">Show example</a></p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Input Generation</h3><p>Let <var>\mathrm{rand}(L, U)</var> be a function that generates a uniformly random integer between <var>L</var> and <var>U</var>, inclusive.</p>
+<p>Generate the forest size <var>N</var> by <var>N = \mathrm{rand}(20, 40)</var>.</p>
+<p>Start with all cells as empty, and generate the tree placement using the following procedure:<br />
+First, determine the maximum number of trees <var>K</var> by <var>K = \max(1, \mathrm{rand}(0, \lfloor N^2 / 6 \rfloor))</var>.<br />
+List the <var>N^2 - 1</var> cells excluding the forest entrance in a random order as <var>(i_0, j_0), \cdots, (i_{N^2 - 2}, j_{N^2 - 2})</var>, and for each <var>k</var>, perform the following:</p>
+<p>Tentatively place a tree at <var>(i_k, j_k)</var> and check whether all empty cells are still reachable from the forest entrance.<br />
+If they are not, cancel the placement.<br />
+Stop the process once the number of placed trees reaches <var>K</var>.</p>
+<p>Finally, choose the coordinates of the legendary flower <var>(t_i, t_j)</var> uniformly at random from the empty cells that satisfy the required conditions.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Tools (Input generator, local tester, and visualizer)</h3><ul>
+<li><a href="https://img.atcoder.jp/ahc054/YDAxDRZr.html?lang=en">Web version</a>: This is more powerful than the local version providing animations.</li>
+<li><a href="https://img.atcoder.jp/ahc054/YDAxDRZr.zip">Local version</a>: You need a compilation environment of <a href="https://www.rust-lang.org/">Rust language</a>.<ul>
+<li><a href="https://img.atcoder.jp/ahc054/YDAxDRZr_windows.zip">Pre-compiled binary for Windows</a>: If you are not familiar with the Rust language environment, please use this instead.</li>
+</ul>
+</li>
+</ul>
+<p>Please be aware that sharing visualization results or discussing solutions/ideas during the contest is prohibited.</p>
+<h4>Input File Format Used by the Tool</h4>
+<p>The input file used for the local tester follows the format below:</p>
+<pre><var>N</var> <var>t_i</var> <var>t_j</var>
+<var>b_{0,0}\cdots b_{0,N-1}</var>
+<var>\vdots</var>
+<var>b_{N-1,0}\cdots b_{N-1,N-1}</var>
+<var>q_i^0</var> <var>q_j^0</var>
+<var>\vdots</var>
+<var>q_i^{N^2-2}</var> <var>q_j^{N^2-2}</var>
+</pre>
+<p>The entries <var>(q_i^k, q_j^k)</var> appended at the end represent the <var>k</var>-th destination candidates.<br />
+When the adventurer chooses a destination, the list is traversed in this order, and the first cell that satisfies the conditions is selected.<br />
+The list <var>q</var> is generated by shuffling the <var>N^2 - 1</var> cells excluding the forest entrance in a random order.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Solution (Python)</h3><details>
+A sample solution in Python is shown below.  
+This program keeps track of the revealed cells but does not place any Treants.
+
+<pre class="prettyprint linenums">
+N, ti, tj = map(int, input().split())
+b = [input() for _ in range(N)]
+revealed = [[False] * N for _ in range(N)]
+while True:
+    pi, pj = map(int, input().split())
+    parts = input().split()
+    n = int(parts[0])
+    xy = list(map(int, parts[1:]))
+    for k in range(n):
+        x = xy[2 * k]
+        y = xy[2 * k + 1]
+        revealed[x][y] = True
+    if pi == ti and pj == tj:
+        break
+    print(0, flush=True)
+</pre>
+</details>
+
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre style="max-height:200px;overflow-y:scroll">20 16 8
+........T..T........
+..............T.....
+T...................
+........T...........
+...T................
+.....T..............
+..........T.........
+....................
+......T.T.........T.
+....T..........T..T.
+.T..T........T.....T
+........T...........
+....................
+.....TT.............
+.................T..
+....................
+..........T.........
+............T.....T.
+....................
+...........T.TTT....
+16 3
+1 7
+8 6
+8 13
+3 1
+13 2
+16 6
+2 5
+18 10
+10 9
+19 2
+7 10
+6 12
+4 7
+10 4
+10 7
+18 8
+12 2
+14 2
+3 7
+4 19
+14 7
+18 5
+5 4
+4 2
+14 16
+11 4
+0 3
+0 0
+8 18
+19 17
+11 5
+18 17
+18 12
+10 1
+8 7
+17 3
+16 18
+16 15
+0 5
+13 13
+14 1
+8 9
+19 10
+17 4
+15 9
+9 11
+1 16
+4 1
+10 5
+1 14
+17 7
+17 10
+11 10
+8 5
+6 9
+4 5
+4 3
+12 9
+6 2
+4 17
+8 2
+19 19
+12 1
+2 4
+8 10
+13 7
+5 16
+2 17
+5 0
+16 0
+14 10
+6 13
+18 13
+12 7
+0 12
+11 9
+8 15
+10 18
+11 11
+16 11
+5 12
+9 15
+7 13
+15 1
+16 9
+7 9
+15 10
+1 13
+7 16
+7 18
+3 10
+1 2
+18 1
+15 11
+5 8
+6 16
+8 12
+2 3
+18 14
+5 14
+13 10
+2 9
+17 12
+0 4
+11 3
+13 6
+17 16
+14 4
+16 5
+14 15
+17 1
+16 8
+3 11
+12 11
+8 19
+1 5
+5 7
+12 16
+0 2
+17 0
+19 8
+7 11
+10 2
+3 6
+0 16
+5 1
+4 16
+19 9
+7 6
+3 9
+6 11
+16 2
+13 3
+19 15
+12 13
+6 10
+6 7
+16 12
+15 7
+13 18
+8 14
+19 7
+4 18
+15 14
+11 13
+4 12
+11 16
+17 8
+2 14
+12 19
+15 5
+9 19
+12 5
+13 19
+3 13
+9 16
+10 17
+7 14
+3 0
+6 5
+17 19
+9 17
+15 2
+1 17
+17 6
+2 13
+9 8
+5 19
+9 2
+8 8
+15 16
+15 12
+15 4
+10 6
+4 8
+7 19
+10 19
+18 9
+9 0
+10 12
+16 4
+15 17
+1 12
+18 0
+13 16
+14 5
+9 5
+13 9
+1 11
+2 0
+14 12
+14 14
+2 12
+7 8
+1 18
+5 13
+9 9
+10 13
+16 16
+3 4
+17 5
+0 7
+5 3
+17 2
+11 12
+13 17
+18 3
+1 19
+1 1
+6 17
+12 6
+15 0
+8 3
+11 17
+8 1
+14 0
+15 8
+7 3
+14 19
+2 15
+15 18
+17 14
+2 6
+3 3
+12 3
+10 16
+6 8
+3 8
+14 9
+10 14
+18 18
+3 15
+0 15
+11 15
+18 16
+5 15
+3 17
+16 19
+11 6
+5 2
+13 8
+12 15
+5 10
+6 0
+7 0
+5 5
+4 10
+7 17
+11 8
+6 1
+4 6
+19 11
+7 5
+10 15
+18 2
+18 11
+2 1
+12 0
+0 9
+5 18
+13 14
+15 6
+9 18
+9 3
+15 15
+4 11
+2 2
+13 0
+8 0
+9 6
+9 12
+9 13
+9 7
+5 6
+4 14
+12 17
+2 19
+2 18
+14 17
+8 11
+6 18
+3 14
+5 17
+11 19
+1 3
+15 3
+10 11
+18 6
+19 4
+17 9
+14 11
+19 18
+17 15
+0 13
+11 14
+3 19
+7 7
+4 15
+9 1
+12 10
+2 11
+19 16
+9 14
+4 0
+6 14
+10 0
+17 17
+12 4
+17 13
+16 10
+13 1
+2 7
+19 6
+12 12
+0 11
+7 12
+19 13
+0 6
+12 8
+19 1
+14 13
+1 6
+11 1
+0 1
+0 18
+7 1
+14 8
+6 19
+4 4
+1 15
+8 17
+5 11
+5 9
+16 14
+10 3
+13 15
+0 14
+1 10
+7 4
+3 2
+3 5
+6 6
+6 4
+3 16
+12 14
+15 13
+18 4
+19 12
+17 11
+15 19
+6 15
+13 4
+16 7
+4 13
+7 2
+19 3
+12 18
+1 0
+16 17
+10 8
+11 18
+8 4
+18 7
+6 3
+19 0
+19 14
+16 1
+16 13
+1 4
+1 8
+0 19
+18 15
+2 10
+0 17
+14 18
+7 15
+1 9
+9 4
+14 3
+11 0
+14 6
+13 11
+3 12
+11 2
+2 8
+4 9
+3 18
+8 16
+19 5
+2 16
+11 7
+13 5
+17 18
+13 12
+10 10
+0 8
+9 10
+18 19
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre style="max-height:200px;overflow-y:scroll">1 1 10
+0 
+1 1 8
+2 2 8 2 10
+0 
+0 
+0 
+0 
+0 
+0 
+0 
+0 
+0 
+0 
+0 
+0 
+0 
+0 
+</pre></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+		<hr/>
+		<form class="form-horizontal form-code-submit" action="/contests/ahc054/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="ahc054_a" />
+			
+			<div class="form-group ">
+				<label class="control-label col-sm-3 col-md-2" for="select-lang">言語</label>
+				<div id="select-lang" class="col-sm-5" data-name="data.LanguageId">
+					<select class="form-control current" data-placeholder="-" name="data.LanguageId" required>
+						<option></option>
+						
+							<option value="5001" data-ace-mode="c_cpp">C&#43;&#43; 20 (gcc 12.2)</option>
+						
+							<option value="5002" data-ace-mode="golang">Go (go 1.20.6)</option>
+						
+							<option value="5003" data-ace-mode="csharp">C# 11.0 (.NET 7.0.7)</option>
+						
+							<option value="5004" data-ace-mode="kotlin">Kotlin (Kotlin/JVM 1.8.20)</option>
+						
+							<option value="5005" data-ace-mode="java">Java (OpenJDK 17)</option>
+						
+							<option value="5006" data-ace-mode="nim">Nim (Nim 1.6.14)</option>
+						
+							<option value="5007" data-ace-mode="text">V (V 0.4)</option>
+						
+							<option value="5008" data-ace-mode="text">Zig (Zig 0.10.1)</option>
+						
+							<option value="5009" data-ace-mode="javascript">JavaScript (Node.js 18.16.1)</option>
+						
+							<option value="5010" data-ace-mode="javascript">JavaScript (Deno 1.35.1)</option>
+						
+							<option value="5011" data-ace-mode="r">R (GNU R 4.2.1)</option>
+						
+							<option value="5012" data-ace-mode="d">D (DMD 2.104.0)</option>
+						
+							<option value="5013" data-ace-mode="d">D (LDC 1.32.2)</option>
+						
+							<option value="5014" data-ace-mode="swift">Swift (swift 5.8.1)</option>
+						
+							<option value="5015" data-ace-mode="dart">Dart (Dart 3.0.5)</option>
+						
+							<option value="5016" data-ace-mode="php">PHP (php 8.2.8)</option>
+						
+							<option value="5017" data-ace-mode="c_cpp">C (gcc 12.2.0)</option>
+						
+							<option value="5018" data-ace-mode="ruby">Ruby (ruby 3.2.2)</option>
+						
+							<option value="5019" data-ace-mode="crystal">Crystal (Crystal 1.9.1)</option>
+						
+							<option value="5020" data-ace-mode="text">Brainfuck (bf 20041219)</option>
+						
+							<option value="5021" data-ace-mode="fsharp">F# 7.0 (.NET 7.0.7)</option>
+						
+							<option value="5022" data-ace-mode="julia">Julia (Julia 1.9.2)</option>
+						
+							<option value="5023" data-ace-mode="sh">Bash (bash 5.2.2)</option>
+						
+							<option value="5024" data-ace-mode="text">Text (cat 8.32)</option>
+						
+							<option value="5025" data-ace-mode="haskell">Haskell (GHC 9.4.5)</option>
+						
+							<option value="5026" data-ace-mode="fortran">Fortran (gfortran 12.2)</option>
+						
+							<option value="5027" data-ace-mode="lua">Lua (LuaJIT 2.1.0-beta3)</option>
+						
+							<option value="5028" data-ace-mode="c_cpp">C&#43;&#43; 23 (gcc 12.2)</option>
+						
+							<option value="5029" data-ace-mode="lisp">Common Lisp (SBCL 2.3.6)</option>
+						
+							<option value="5030" data-ace-mode="cobol">COBOL (Free) (GnuCOBOL 3.1.2)</option>
+						
+							<option value="5031" data-ace-mode="c_cpp">C&#43;&#43; 23 (Clang 16.0.6)</option>
+						
+							<option value="5032" data-ace-mode="sh">Zsh (Zsh 5.9)</option>
+						
+							<option value="5033" data-ace-mode="python">SageMath (SageMath 9.5)</option>
+						
+							<option value="5034" data-ace-mode="sh">Sed (GNU sed 4.8)</option>
+						
+							<option value="5035" data-ace-mode="text">bc (bc 1.07.1)</option>
+						
+							<option value="5036" data-ace-mode="text">dc (dc 1.07.1)</option>
+						
+							<option value="5037" data-ace-mode="perl">Perl (perl  5.34)</option>
+						
+							<option value="5038" data-ace-mode="sh">AWK (GNU Awk 5.0.1)</option>
+						
+							<option value="5039" data-ace-mode="text">なでしこ (cnako3 3.4.20)</option>
+						
+							<option value="5040" data-ace-mode="text">Assembly x64 (NASM 2.15.05)</option>
+						
+							<option value="5041" data-ace-mode="pascal">Pascal (fpc 3.2.2)</option>
+						
+							<option value="5042" data-ace-mode="csharp">C# 11.0 AOT (.NET 7.0.7)</option>
+						
+							<option value="5043" data-ace-mode="lua">Lua (Lua 5.4.6)</option>
+						
+							<option value="5044" data-ace-mode="prolog">Prolog (SWI-Prolog 9.0.4)</option>
+						
+							<option value="5045" data-ace-mode="sh">PowerShell (PowerShell 7.3.1)</option>
+						
+							<option value="5046" data-ace-mode="scheme">Scheme (Gauche 0.9.12)</option>
+						
+							<option value="5047" data-ace-mode="scala">Scala 3.3.0 (Scala Native 0.4.14)</option>
+						
+							<option value="5048" data-ace-mode="vbscript">Visual Basic 16.9 (.NET 7.0.7)</option>
+						
+							<option value="5049" data-ace-mode="text">Forth (gforth 0.7.3)</option>
+						
+							<option value="5050" data-ace-mode="clojure">Clojure (babashka 1.3.181)</option>
+						
+							<option value="5051" data-ace-mode="erlang">Erlang (Erlang 26.0.2)</option>
+						
+							<option value="5052" data-ace-mode="typescript">TypeScript 5.1 (Deno 1.35.1)</option>
+						
+							<option value="5053" data-ace-mode="c_cpp">C&#43;&#43; 17 (gcc 12.2)</option>
+						
+							<option value="5054" data-ace-mode="rust">Rust (rustc 1.70.0)</option>
+						
+							<option value="5055" data-ace-mode="python">Python (CPython 3.11.4)</option>
+						
+							<option value="5056" data-ace-mode="scala">Scala (Dotty 3.3.0)</option>
+						
+							<option value="5057" data-ace-mode="text">Koka (koka 2.4.0)</option>
+						
+							<option value="5058" data-ace-mode="typescript">TypeScript 5.1 (Node.js 18.16.1)</option>
+						
+							<option value="5059" data-ace-mode="ocaml">OCaml (ocamlopt 5.0.0)</option>
+						
+							<option value="5060" data-ace-mode="raku">Raku (Rakudo 2023.06)</option>
+						
+							<option value="5061" data-ace-mode="text">Vim (vim 9.0.0242)</option>
+						
+							<option value="5062" data-ace-mode="lisp">Emacs Lisp (Native Compile) (GNU Emacs 28.2)</option>
+						
+							<option value="5063" data-ace-mode="python">Python (Mambaforge / CPython 3.10.10)</option>
+						
+							<option value="5064" data-ace-mode="clojure">Clojure (clojure 1.11.1)</option>
+						
+							<option value="5065" data-ace-mode="text">プロデル (mono版プロデル 1.9.1182)</option>
+						
+							<option value="5066" data-ace-mode="text">ECLiPSe (ECLiPSe 7.1_13)</option>
+						
+							<option value="5067" data-ace-mode="text">Nibbles (literate form) (nibbles 1.01)</option>
+						
+							<option value="5068" data-ace-mode="ada">Ada (GNAT 12.2)</option>
+						
+							<option value="5069" data-ace-mode="text">jq (jq 1.6)</option>
+						
+							<option value="5070" data-ace-mode="text">Cyber (Cyber v0.2-Latest)</option>
+						
+							<option value="5071" data-ace-mode="clojure">Carp (Carp 0.5.5)</option>
+						
+							<option value="5072" data-ace-mode="c_cpp">C&#43;&#43; 17 (Clang 16.0.6)</option>
+						
+							<option value="5073" data-ace-mode="c_cpp">C&#43;&#43; 20 (Clang 16.0.6)</option>
+						
+							<option value="5074" data-ace-mode="text">LLVM IR (Clang 16.0.6)</option>
+						
+							<option value="5075" data-ace-mode="lisp">Emacs Lisp (Byte Compile) (GNU Emacs 28.2)</option>
+						
+							<option value="5076" data-ace-mode="text">Factor (Factor 0.98)</option>
+						
+							<option value="5077" data-ace-mode="d">D (GDC 12.2)</option>
+						
+							<option value="5078" data-ace-mode="python">Python (PyPy 3.10-v7.3.12)</option>
+						
+							<option value="5079" data-ace-mode="text">Whitespace (whitespacers 1.0.0)</option>
+						
+							<option value="5080" data-ace-mode="text">&gt;&lt;&gt; (fishr 0.1.0)</option>
+						
+							<option value="5081" data-ace-mode="ocaml">ReasonML (reason 3.9.0)</option>
+						
+							<option value="5082" data-ace-mode="python">Python (Cython 0.29.34)</option>
+						
+							<option value="5083" data-ace-mode="matlab">Octave (GNU Octave 8.2.0)</option>
+						
+							<option value="5084" data-ace-mode="haxe">Haxe (JVM) (Haxe 4.3.1)</option>
+						
+							<option value="5085" data-ace-mode="elixir">Elixir (Elixir 1.15.2)</option>
+						
+							<option value="5086" data-ace-mode="text">Mercury (Mercury 22.01.6)</option>
+						
+							<option value="5087" data-ace-mode="text">Seed7 (Seed7 3.2.1)</option>
+						
+							<option value="5088" data-ace-mode="lisp">Emacs Lisp (No Compile) (GNU Emacs 28.2)</option>
+						
+							<option value="5089" data-ace-mode="text">Unison (Unison M5b)</option>
+						
+							<option value="5090" data-ace-mode="cobol">COBOL (GnuCOBOL(Fixed) 3.1.2)</option>
+						
+					</select>
+					<span class="error"></span>
+				</div>
+			</div>
+			<script>var currentLang = getLS('defaultLang');</script>
+			
+			
+<div class="form-group">
+	<div class="col-sm-3 col-md-2 editor-label">
+		<label class="control-label" for="sourceCode">ソースコード</label>
+		<div class="editor-buttons">
+			<button id="btn-open-file" type="button" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; ファイルを開く
+			</button>
+			<button id="btn-customize" type="button" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> &nbsp; カスタマイズ
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-toggle-editor" data-toggle="button" autocomplete="off">
+				エディタ切り替え
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-auto-height" data-toggle="button" autocomplete="off">
+				高さ自動調節
+			</button>
+		</div>
+	</div>
+	<div class="col-sm-9 col-md-10" id="sourceCode">
+		<div id="editor"></div>
+		<textarea id="plain-textarea" class="form-control" style="display:none;" name="sourceCode"></textarea>
+		<p>
+			<span class="gray">※ 512 KiB まで</span><br>
+		</p>
+	</div>
+	<input id="input-open-file" type="file" style="display:none;">
+</div>
+
+
+			<input type="hidden" name="csrf_token" value="n4WjZrD&#43;BXNfCmXu1Mc6349ISiYzCuPFkrmMFbpvvhA=" />
+			<div class="form-group">
+				<label class="control-label col-sm-3 col-md-2"></label>
+				<div class="col-sm-5">
+					
+					<button type="submit" class="btn btn-primary" id="submit">提出</button>
+				</div>
+			</div>
+		</form>
+		
+	</div>
+</div>
+
+
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/ahc054/tasks/ahc054_a?lang=ja" data-a2a-title="A - Treant&#39;s Forest">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_hatena"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+
+	<div class="container" style="margin-bottom: 80px;">
+			<footer class="footer">
+			
+				<ul>
+					<li><a href="/contests/ahc054/rules">ルール</a></li>
+					<li><a href="/contests/ahc054/glossary">用語集</a></li>
+					
+				</ul>
+			
+			<ul>
+				<li><a href="/tos">利用規約</a></li>
+				<li><a href="/privacy">プライバシーポリシー</a></li>
+				<li><a href="/personal">個人情報保護方針</a></li>
+				<li><a href="/company">企業情報</a></li>
+				<li><a href="/faq">よくある質問</a></li>
+				<li><a href="/contact">お問い合わせ</a></li>
+				<li><a href="/documents/request">資料請求</a></li>
+			</ul>
+			<div class="text-center">
+					<small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+			</div>
+			</footer>
+	</div>
+	<p id="fixed-server-timer" class="contest-timer"></p>
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> ページトップ</div>
+
+</body>
+</html>
+
+
