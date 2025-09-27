@@ -26,7 +26,13 @@ fn main() {
             std::process::exit(1)
         });
     match exec(&mut p, true) {
-        Ok(score) => {
+        Ok((input, output)) => {
+            let (score, err) = compute_score(&input, &output);
+            if err.starts_with("Not reachable") {
+                eprintln!("{}", err);
+            } else if err != "" {
+                panic!("An internal error has occurred. Please contact the organizers via clar.");
+            }
             eprintln!("Score = {}", score);
         }
         Err(err) => {

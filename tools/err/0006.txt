@@ -1,0 +1,32 @@
+Generated 426 candidates in phase 1
+Sorted candidates by penalty (min=0, max=3)
+Evaluating only candidates with minimum penalty: 0
+New best: score=1070, penalty=0, paths=213
+New best: score=1178, penalty=0, paths=212
+New best: score=1306, penalty=0, paths=206
+New best: score=1308, penalty=0, paths=206
+Evaluated 25 candidates in phase 3
+Board (n=20):
+....######S#.#...###
+###....###...#.#.###
+###.#####..#.#.#....
+....###...#..#.#.###
+###....##.#.#..#.###
+###.###...#.#.##....
+......###.#.#.#..###
+#####...#.#.#..#.###
+###...##..#.#.#.....
+....#.##.#..#.#.####
+###.#.#...#.#.#....#
+###.#.###.#.#..#.###
+#....##...#.#.#.....
+###.#...#.#.#.#.####
+.....##..#..#.#.....
+####.#..#..##.##.###
+......#.#.#....#....
+###.#.#.#.#X#.##.###
+###.#.#.#..##.#..###
+....#....#.....#....
+
+Best score: 1308
+Score = 1194

@@ -17,7 +17,7 @@ You can update to the latest compiler by executing the following command.
 rustup update
 ```
 
-For those who are not familiar with the Rust language environment, we have prepared a [pre-compiled binary for Windows](https://img.atcoder.jp/ahc054/YDAxDRZr_windows.zip).
+For those who are not familiar with the Rust language environment, we have prepared a [pre-compiled binary for Windows](https://img.atcoder.jp/ahc054/YDAxDRZr_v2_windows.zip).
 The following examples assume that you will be working in the directory where this README is located.
 
 ## Input Generation
@@ -50,7 +50,7 @@ cargo run -r --bin tester cmd arg1 arg2 ... < in.txt > out.txt
 ```
 
 If you use the precompiled binary for Windows, replace `cargo run -r --bin tester` with `./tester.exe`.
-You can visualize the contents of the output file by pasting it into the [visualizer](https://img.atcoder.jp/ahc054/YDAxDRZr.html?lang=en).
+You can visualize the contents of the output file by pasting it into the [visualizer](https://img.atcoder.jp/ahc054/YDAxDRZr_v2.html?lang=en).
 
 ### Examples
 When executing a binary `a.out` which has been compiled in C++, etc. 
@@ -89,7 +89,7 @@ When using the precompiled binary for Windows,
 The above command writes a visualization result to `vis.html`.
 It also outputs the score to standard output.
 
-You can also use a [web visualizer](https://img.atcoder.jp/ahc054/YDAxDRZr.html?lang=en) which is more rich in features.
+You can also use a [web visualizer](https://img.atcoder.jp/ahc054/YDAxDRZr_v2.html?lang=en) which is more rich in features.
 
 
 # 使い方
@@ -103,7 +103,7 @@ https://www.rust-lang.org/ja を参考に各自インストールして下さい
 rustup update
 ```
 
-Rust言語の環境構築が面倒な方向けに、[Windows用のコンパイル済みバイナリ](https://img.atcoder.jp/ahc054/YDAxDRZr_windows.zip)も用意してあります。
+Rust言語の環境構築が面倒な方向けに、[Windows用のコンパイル済みバイナリ](https://img.atcoder.jp/ahc054/YDAxDRZr_v2_windows.zip)も用意してあります。
 以下の実行例では、このREADMEが置かれているディレクトリに移動して作業することを想定しています。
 
 ## 入力生成
@@ -136,7 +136,7 @@ cargo run -r --bin tester cmd arg1 arg2 ... < in.txt > out.txt
 のようにします。
 
 Windows用のコンパイル済バイナリを使用する場合は `cargo run -r --bin tester` の部分を `./tester.exe` に置き換えて下さい。
-出力された`out.txt`の中身を[ビジュアライザ](https://img.atcoder.jp/ahc054/YDAxDRZr.html?lang=ja)に貼り付けると、ビジュアライズが可能です。
+出力された`out.txt`の中身を[ビジュアライザ](https://img.atcoder.jp/ahc054/YDAxDRZr_v2.html?lang=ja)に貼り付けると、ビジュアライズが可能です。
 
 ### 例
 C++などでコンパイル済みの `a.out` というバイナリを実行する場合
@@ -174,4 +174,4 @@ Windows用のコンパイル済バイナリを使用する場合は以下のよ�
 出力のビジュアライズ結果は `vis.html` というファイルに書き出されます。
 標準出力にはスコアを出力します。
 
-より機能が豊富な[ウェブ版のビジュアライザ](https://img.atcoder.jp/ahc054/YDAxDRZr.html?lang=ja)も利用可能です。
+より機能が豊富な[ウェブ版のビジュアライザ](https://img.atcoder.jp/ahc054/YDAxDRZr_v2.html?lang=ja)も利用可能です。

@@ -106,7 +106,11 @@ pub fn parse_output(input: &Input, f: &str) -> Result<Output, String> {
             continue;
         }
         let mut ss = line.split_whitespace();
-        let m = read(ss.next(), 0..=input.N * input.N)?;
+        let m = read(ss.next(), -1..=(input.N * input.N) as i32)?;
+        if m == -1 {
+            out.push(vec![(!0, !0)]);
+            break;
+        }
         let mut xy = vec![];
         for _ in 0..m {
             xy.push((read(ss.next(), 0..input.N)?, read(ss.next(), 0..input.N)?));
@@ -124,7 +128,7 @@ pub fn gen(seed: u64) -> Input {
     let N = rng.gen_range(20i32..=40) as usize;
     let s = (0, N / 2);
     let mut b = mat!['.'; N; N];
-    let K = rng.gen_range(0..=(N * N / 6) as i32) as usize;
+    let K = rng.gen_range(0..=(N * N / 6) as i32).max(1) as usize;
     let mut k = 0;
     let mut ij = vec![];
     for i in 0..N {
@@ -186,6 +190,7 @@ pub struct Sim {
     pub new_revealed: Vec<(usize, usize)>,
     pub dist: Vec<i32>,
     pub q: Vec<(usize, usize)>,
+    pub turn: usize,
 }
 
 impl Sim {
@@ -202,6 +207,7 @@ impl Sim {
             new_revealed: vec![(0, input.N / 2)],
             dist: vec![0; input.N * input.N],
             q: input.q.iter().rev().copied().collect_vec(),
+            turn: 0,
         }
     }
     fn change_target(&mut self, target: (usize, usize)) {
@@ -236,6 +242,7 @@ impl Sim {
     }
     pub fn step(&mut self, xy: &[(usize, usize)]) -> Result<(), String> {
         self.new_revealed.clear();
+        self.turn += 1;
         if self.p == self.t {
             return Err("Too many outputs".to_owned());
         }
@@ -322,14 +329,25 @@ pub fn compute_score(input: &Input, out: &Output) -> (i64, String) {
 pub fn compute_score_details(input: &Input, out: &[Vec<(usize, usize)>]) -> (i64, String, Sim) {
     let mut sim = Sim::new(input);
     for t in 0..out.len() {
-        if let Err(e) = sim.step(&out[t]) {
-            return (0, format!("{} (turn: {})", e, t + 1), sim);
+        if out[t] == vec![(!0, !0)] {
+            for t in t.. {
+                if sim.p == sim.t {
+                    break;
+                }
+                if let Err(e) = sim.step(&vec![]) {
+                    return (0, format!("{} (turn: {})", e, t + 1), sim);
+                }
+            }
+        } else {
+            if let Err(e) = sim.step(&out[t]) {
+                return (0, format!("{} (turn: {})", e, t + 1), sim);
+            }
         }
     }
     if sim.p != sim.t {
         (0, format!("Not finished"), sim)
     } else {
-        (out.len() as i64, String::new(), sim)
+        (sim.turn as i64, String::new(), sim)
     }
 }
 
@@ -754,7 +772,7 @@ pub fn vis(input: &Input, out: &[Vec<(usize, usize)>]) -> (i64, String, String) 
     (score, err, doc.to_string())
 }
 
-pub fn exec(p: &mut std::process::Child, local: bool) -> Result<i64, String> {
+pub fn exec(p: &mut std::process::Child, local: bool) -> Result<(Input, Output), String> {
     let mut input = String::new();
     std::io::stdin().read_to_string(&mut input).unwrap();
     let input = parse_input(&input);
@@ -766,25 +784,33 @@ pub fn exec(p: &mut std::process::Child, local: bool) -> Result<i64, String> {
     }
     let _ = stdin.flush();
     let mut sim = Sim::new(&input);
-    let mut turn = 0;
+    let mut out = vec![];
     loop {
         let _ = writeln!(stdin, "{} {}", sim.p.0, sim.p.1);
-        let _ = writeln!(
-            stdin,
-            "{} {}",
-            sim.new_revealed.len(),
-            sim.new_revealed
-                .iter()
-                .map(|&(x, y)| format!("{} {}", x, y))
-                .join(" ")
-        );
+        if sim.new_revealed.is_empty() {
+            let _ = writeln!(stdin, "0");
+        } else {
+            let _ = writeln!(
+                stdin,
+                "{} {}",
+                sim.new_revealed.len(),
+                sim.new_revealed
+                    .iter()
+                    .map(|&(x, y)| format!("{} {}", x, y))
+                    .join(" ")
+            );
+        }
         let _ = stdin.flush();
         if sim.p == sim.t {
             break;
         }
         let line = read_line(&mut stdout, local)?;
         let mut ss = line.split_whitespace();
-        let m = read(ss.next(), 0..=input.N * input.N)?;
+        let m = read(ss.next(), -1..=(input.N * input.N) as i32)?;
+        if m == -1 {
+            out.push(vec![(!0, !0)]);
+            break;
+        }
         let mut xy = vec![];
         for _ in 0..m {
             xy.push((read(ss.next(), 0..input.N)?, read(ss.next(), 0..input.N)?));
@@ -793,8 +819,8 @@ pub fn exec(p: &mut std::process::Child, local: bool) -> Result<i64, String> {
             return Err(format!("Too many tokens in a line: {}", line));
         }
         sim.step(&xy)?;
-        turn += 1;
+        out.push(xy);
     }
     p.wait().unwrap();
-    Ok(turn)
+    Ok((input, Output { out }))
 }
