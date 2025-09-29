@@ -41,7 +41,7 @@ static inline int charToCell(char c){
     }
 }
 
-static constexpr int NUM_EVALUATIONS = 7;
+static constexpr int NUM_EVALUATIONS = 2;
 
 // ===== Board =====
 struct Board {
@@ -133,7 +133,7 @@ struct Board {
                 } else if(s == EMPTY || s == PATH || s == PATH_2) {
                     cerr << '.';
                 } else if(s == TREE) {
-                    cerr << '#';
+                    cerr << 'T';
                 } else if(s == NEW_TREE) {
                     cerr << '#';
                 } else {
@@ -244,6 +244,7 @@ struct Step1Constructor {
         vector<pair<int,int>> paths;
     };
     vector<Pattern> PATTERNS;
+    vector<Pattern> PATTERNS_2;
     Step1Constructor(){
         PATTERNS.reserve(8);
         PATTERNS.push_back({{{-2,0},{-1,1},{0,-1},{0,1},{1,0}}, {{-1,-1},{-1,0}}});
@@ -254,6 +255,15 @@ struct Step1Constructor {
         PATTERNS.push_back({{{-1,-1},{-1,0},{0,-2},{0,1},{1,0}}, {{0,-1},{1,-1}}});
         PATTERNS.push_back({{{-1,0},{0,-1},{0,2},{1,0},{1,1}}, {{-1,1},{0,1}}});
         PATTERNS.push_back({{{-1,0},{-1,1},{0,-1},{0,2},{1,0}}, {{0,1},{1,1}}});
+        PATTERNS_2.reserve(8);
+        PATTERNS_2.push_back({{{-3,0},{-2,1},{0,-1},{0,1},{1,0},{-1,-1},{-1,1}}, {{-2,-1},{-2,0},{-1,0}}});
+        PATTERNS_2.push_back({{{3,0},{2,1},{0,-1},{0,1},{-1,0},{1,-1},{1,1}}, {{2,-1},{2,0},{1,0}}});
+        PATTERNS_2.push_back({{{-3,0},{-2,-1},{0,1},{0,-1},{1,0},{-1,1},{-1,-1}}, {{-2,1},{-2,0},{-1,0}}});
+        PATTERNS_2.push_back({{{3,0},{2,-1},{0,1},{0,-1},{-1,0},{1,1},{1,-1}}, {{2,1},{2,0},{1,0}}});
+        PATTERNS_2.push_back({{{0,-3},{1,-2},{-1,0},{1,0},{0,1},{-1,-1},{1,-1}}, {{-1,-2},{0,-2},{0,-1}}});
+        PATTERNS_2.push_back({{{0,-3},{-1,-2},{1,0},{-1,0},{0,1},{1,-1},{-1,-1}}, {{1,-2},{0,-2},{0,-1}}});
+        PATTERNS_2.push_back({{{0,3},{1,2},{-1,0},{1,0},{0,-1},{-1,1},{1,1}}, {{-1,2},{0,2},{0,1}}});
+        PATTERNS_2.push_back({{{0,3},{-1,2},{1,0},{-1,0},{0,-1},{1,1},{-1,1}}, {{1,2},{0,2},{0,1}}});
     }
 
     optional<Board> random_construct(Board board){
@@ -264,6 +274,15 @@ struct Step1Constructor {
         for(int id: idx){
             if(can_apply_pattern(board, id)){
                 return construct(board, id);
+            }
+        }
+        idx.clear();
+        idx.reserve(PATTERNS_2.size());
+        iota(idx.begin(), idx.end(), 0);
+        shuffle(idx.begin(), idx.end(), rng);
+        for(int id: idx){
+            if(can_apply_pattern2(board, id)){
+                return construct2(board, id);
             }
         }
         return nullopt;
@@ -278,6 +297,17 @@ struct Step1Constructor {
         if(!_can_apply_pattern(board, PATTERNS[idx])) return nullopt;
         return _apply_pattern(board, gi, gj, PATTERNS[idx]);
     }
+
+    bool can_apply_pattern2(const Board& board, int idx) const {
+        return _can_apply_pattern(board, PATTERNS_2[idx]);
+    }
+
+    optional<Board> construct2(Board board, int idx){
+        auto [gi, gj] = board.to_2d(board.goal_pos);
+        if(!_can_apply_pattern(board, PATTERNS_2[idx])) return nullopt;
+        return _apply_pattern(board, gi, gj, PATTERNS_2[idx]);
+    }
+
 
     bool _can_apply_pattern(const Board& board, const Pattern& p) const {
         auto [ti,tj] = board.to_2d(board.goal_pos);
@@ -350,8 +380,13 @@ struct Step2Constructor {
                     if(!_is_passable(board,0,j)){ valid=false; break; }
                 }
                 if(valid){
-                    int pen = (l<edge_size? penalty:0);
-                    dp[0][l][r] = r + pen;
+                    dp[0][l][r] = r;
+                    if(l<edge_size-1) {
+                        dp[0][l][r] += penalty;
+                    }
+                    else if(l<edge_size) {
+                        dp[0][l][r] += 2;
+                    }
                     parent[0][l][r] = {-1,-1};
                 }
             }
@@ -370,8 +405,13 @@ struct Step2Constructor {
                 if(min_r < INF){
                     for(int r2=r;r2<R;r2++){
                         if(!_is_passable(board,i,r2)) break;
-                        int pen = (r<edge_size? penalty:0);
-                        double nc = min_r + r2 + pen;
+                        double nc = min_r + r2;
+                        if(r<edge_size-1) {
+                            nc += penalty;
+                        }
+                        else if(r<edge_size) {
+                            nc += 2;
+                        }
                         if(nc < dp[i][r][r2]){
                             dp[i][r][r2] = nc;
                             // find parent with min value
@@ -394,8 +434,13 @@ struct Step2Constructor {
                 if(min_l < INF){
                     for(int l2=l; l2>=L; l2--){
                         if(!_is_passable(board,i,l2)) break;
-                        int pen = (l2<edge_size? penalty:0);
-                        double nc = min_l + l + pen;
+                        double nc = min_l + l;
+                        if(l2<edge_size-1) {
+                            nc += penalty;
+                        }
+                        else if(l2<edge_size) {
+                            nc += 2;
+                        }
                         if(nc < dp[i][l2][l]){
                             dp[i][l2][l] = nc;
                             int chosen_r = -1;
@@ -475,7 +520,7 @@ struct Step3Constructor {
 
         auto [si,sj] = _find_starting_point(board, ranges, start_i);
         if(si==-1) return {board, true};
-        ranges[si].first -= 1;
+        ranges[si].first -= 2;
 
         _initialize_dp(board, ranges, si, sj);
         _process_dp(board, ranges, si);
@@ -499,7 +544,7 @@ struct Step3Constructor {
                 if(up==PATH || lf==PATH || dn==PATH) continue;
                 left=j;
             }
-            int right = min(board.n-1, left + 10);
+            int right = min(board.n-1, left + 12);
             ranges.emplace_back(left, right);
         }
         return ranges;
@@ -508,8 +553,8 @@ struct Step3Constructor {
     pair<int,int> _find_starting_point(const Board& board, const vector<pair<int,int>>& ranges, int start_i){
         for(int i=start_i;i<N-1;i++){
             int left = ranges[i].first;
-            int left2_state = (left-2>=0? board.get_state(i,left-2): -1);
-            if(left2_state == PATH) return {i, left-1};
+            int left2_state = (left-3>=0? board.get_state(i,left-2): -1);
+            if(left2_state == PATH) return {i, left-2};
         }
         return {-1,-1};
     }
@@ -519,7 +564,7 @@ struct Step3Constructor {
         dp.assign(N, vector<vector<double>>(N, vector<double>(N, INF)));
         parent.assign(N, vector<vector<pair<int,int>>>(N, vector<pair<int,int>>(N, {-1,-1})));
         int l = sj;
-        for(int r=sj; r<ranges[si].second; r++){
+        for(int r=sj+1; r<ranges[si].second; r++){
             if(!_is_passable(board, si, r)) break;
             dp[si][l][r] = r;
             parent[si][l][r] = {-1,-1};
@@ -538,8 +583,8 @@ struct Step3Constructor {
             for(int r=ranges[i-1].first; r<ranges[i-1].second; r++){
                 if(!(ranges[i].first <= r && r < ranges[i].second)) continue;
                 double min_r = INF; int argl=-1;
-                for(int l=0;l<=r;l++){
-                    if(l<ranges[i-1].first || l>ranges[i-1].second) continue;
+                for(int l=ranges[i-1].first ;l<=r;l++){
+                    if(l>ranges[i-1].second) break;
                     if(dp[i-1][l][r] < min_r){ min_r = dp[i-1][l][r]; argl=l; }
                 }
                 if(min_r<INF){
@@ -548,13 +593,7 @@ struct Step3Constructor {
                         double nc = min_r + r2;
                         if(nc < dp[i][r][r2]){
                             dp[i][r][r2] = nc;
-                            int chosen_l=-1;
-                            for(int l=0;l<=r;l++){
-                                if(l>=ranges[i-1].first && l<=ranges[i-1].second && dp[i-1][l][r]==min_r){
-                                    chosen_l=l; break;
-                                }
-                            }
-                            parent[i][r][r2] = {chosen_l, r};
+                            parent[i][r][r2] = {argl, r};
                         }
                     }
                 }
@@ -569,14 +608,10 @@ struct Step3Constructor {
                 if(min_l<1e100){
                     for(int l2=l; l2>=ranges[i].first; l2--){
                         if(!_is_passable(board,i,l2)) break;
-                        double nc = min_l + l2;
+                        double nc = min_l + l;
                         if(nc < dp[i][l2][l]){
                             dp[i][l2][l] = nc;
-                            int chosen_r=-1;
-                            for(int rp=l; rp<ranges[i-1].second; rp++){
-                                if(dp[i-1][l][rp]==min_l){ chosen_r=rp; break; }
-                            }
-                            parent[i][l2][l] = {l, chosen_r};
+                            parent[i][l2][l] = {l, argr};
                         }
                         if(i >= N-2) break;
                     }
@@ -743,6 +778,9 @@ struct Step5Constructor {
         auto dist = _calculate_distances_from_start(board);
         auto path_positions = _get_path_positions_sorted_by_distance(board, dist);
         for(auto [pi,pj]: path_positions){
+            if (_try_create_four_branch(board, pi, pj, use_hidden_tree)) {
+                continue;
+            }
             if (_try_create_three_branch(board, pi, pj, use_hidden_tree)) {
                 continue;
             }
@@ -760,6 +798,9 @@ struct Step5Constructor {
             }
         }
         for(auto [pi,pj]: path_positions){
+            if (_try_create_four_branch(board, pi, pj, false)) {
+                continue;
+            }
             if (_try_create_three_branch(board, pi, pj, false)) {
                 continue;
             }
@@ -845,6 +886,24 @@ struct Step5Constructor {
         }
         return false;
     }
+    bool _try_create_four_branch(Board& board, int pi, int pj, bool use_hidden_tree){
+        const int d4[4][2]={{0,1},{0,-1},{1,0},{-1,0}};
+        for(auto& d: d4){
+            int ai=pi+d[0], aj=pj+d[1];
+            int bi=pi+2*d[0], bj=pj+2*d[1];
+            int ci=pi+3*d[0], cj=pj+3*d[1];
+            int di=pi+4*d[0], dj=pj+4*d[1];
+            if(ai<0||aj<0||bi<0||bj<0||ci<0||cj<0||di<0||dj<0||ai>=board.n||aj>=board.n||bi>=board.n||bj>=board.n||ci>=board.n||cj>=board.n||di>=board.n||dj>=board.n) continue;
+            if(!(board.get_state(ai,aj)==EMPTY && board.get_state(bi,bj)==EMPTY && board.get_state(ci,cj)==EMPTY && board.get_state(di,dj)==EMPTY)) continue;
+            if(!_check_no_adjacent_paths(board, ai,aj, pi,pj)) continue;
+            if(!_check_no_adjacent_paths(board, bi,bj, pi,pj)) continue;
+            if(!_check_no_adjacent_paths(board, ci,cj, pi,pj)) continue;
+            if(!_check_no_adjacent_paths(board, di,dj, pi,pj)) continue;
+            _create_four_branch(board, ai,aj, bi,bj, ci,cj, di,dj, use_hidden_tree);
+            return true;
+        }
+        return false;
+    }
 
     bool _check_no_adjacent_paths(const Board& board, int ci, int cj, int exi, int exj){
         const int d4[4][2]={{0,1},{0,-1},{1,0},{-1,0}};
@@ -871,6 +930,17 @@ struct Step5Constructor {
         _surround_with_trees(board, ai,aj, false);
         _surround_with_trees(board, bi,bj, use_hidden_tree);
         _surround_with_trees(board, ci,cj, use_hidden_tree);
+    }
+
+    void _create_four_branch(Board& board, int ai, int aj, int bi, int bj, int ci, int cj, int di, int dj, bool use_hidden_tree){
+        board.set_state(ai,aj, PATH);
+        board.set_state(bi,bj, PATH);
+        board.set_state(ci,cj, PATH);
+        board.set_state(di,dj, PATH);
+        _surround_with_trees(board, ai,aj, false);
+        _surround_with_trees(board, bi,bj, use_hidden_tree);
+        _surround_with_trees(board, ci,cj, use_hidden_tree);
+        _surround_with_trees(board, di,dj, use_hidden_tree);
     }
 
     void _surround_with_trees(Board& board, int ci, int cj, bool hidden_tree = false){
@@ -1112,7 +1182,7 @@ private:
                 // #（TREE または NEW_TREE）を見つけた場合
                 if(cell_state == TREE || cell_state == NEW_TREE) {
                     // この#が@と隣接しているかチェック
-                    if(!_is_adjacent_to_path(nx, ny, path_cells, board.n)) {
+                    if(!_is_adjacent_to_path(board, nx, ny, path_cells, board.n)) {
                         penalty++;
                     }
                     break; // 最初の#を見つけたので終了
@@ -1127,20 +1197,19 @@ private:
         return penalty;
     }
 
-    bool _is_adjacent_to_path(int tree_x, int tree_y, const unordered_set<long long>& path_cells, int board_size) const {
+    bool _is_adjacent_to_path(const Board& board, int tree_x, int tree_y, const unordered_set<long long>& path_cells, int board_size) const {
         for(auto [dx, dy] : directions) {
-            int adj_x = tree_x + dx, adj_y = tree_y + dy;
-
-            // 境界チェック
-            if(!(0 <= adj_x && adj_x < board_size && 0 <= adj_y && adj_y < board_size)) continue;
-
-            // 隣接セルが@（最短パス）に含まれているかチェック
-            long long key = ((long long)adj_x << 32) | (unsigned long long)adj_y;
-            if(path_cells.count(key)) {
-                return true;
+            int adj_x = tree_x, adj_y = tree_y;
+            while(true){
+                if(path_cells.count(((long long)adj_x << 32) | (unsigned long long)adj_y)) {
+                    return true;
+                }
+                adj_x += dx;
+                adj_y += dy;
+                if(adj_x<0||adj_x>=board_size||adj_y<0||adj_y>=board_size) break;
+                if(board.get_state(adj_x, adj_y) != PATH) break;
             }
         }
-
         return false;
     }
 };
@@ -1154,13 +1223,12 @@ struct BoardSimulator {
 
     // runtime state
     const Board* boardPtr = nullptr;
-    vector<vector<char>> board_chars;
     pair<int,int> p, t;
     pair<int,int> target;
-    vector<vector<char>> revealed;
-    vector<pair<int,int>> new_revealed;
-    vector<vector<int>> dist;
-    vector<pair<int,int>> q;
+    vector<char> revealed;     // 1次元配列に変更
+    vector<int> new_revealed;
+    vector<int> dist;          // 1次元配列に変更
+    vector<int> q;
     int turn;
 
     BoardSimulator(int n_, int si, int sj, int ti_, int tj_, const vector<pair<int,int>>* given_order=nullptr)
@@ -1180,37 +1248,34 @@ struct BoardSimulator {
         dij = {make_pair(-1,0), make_pair(1,0), make_pair(0,-1), make_pair(0,1)};
     }
 
-    inline char _board_to_char(const Board& board, int i, int j){
-        return cellToChar(board.get_state(i,j));
-    }
-    inline bool _is_passable(char c){ return c=='.' || c=='*' || c=='S' || c=='X'; }
+    inline bool _is_passable(int c){ return c==EMPTY || c==PATH || c==PATH_2 || c==START || c==GOAL; }
 
-    void _change_target(const pair<int,int>& tgt){
+    void _change_target(const pair<int,int>& tgt, const Board& board){
         if(target==tgt) return;
         target = tgt;
         if(target.first==-1) return;
 
         // BFS for distance from target
-        dist.assign(n, vector<int>(n, INT_MAX));
+        dist.assign(n*n, INT_MAX);
         deque<pair<int,int>> dq;
         dq.push_back(target);
-        dist[target.first][target.second]=0;
+        dist[target.first*n + target.second]=0;
 
         while(!dq.empty()){
             auto [i,j] = dq.front(); dq.pop_front();
             for(auto [di,dj]: dij){
                 int i2=i+di, j2=j+dj;
                 if(i2<0||j2<0||i2>=n||j2>=n) continue;
-                if(dist[i2][j2] != INT_MAX) continue;
-                if((!revealed[i2][j2]) || _is_passable(board_chars[i2][j2])){
-                    dist[i2][j2] = dist[i][j] + 1;
+                if(dist[i2*n + j2] != INT_MAX) continue;
+                if((!revealed[i2*n + j2]) || _is_passable(board.get_state(i2,j2))){
+                    dist[i2*n + j2] = dist[i*n + j] + 1;
                     dq.emplace_back(i2,j2);
                 }
             }
         }
     }
 
-    bool _reveal_from_position(const pair<int,int>& pos){
+    bool _reveal_from_position(const pair<int,int>& pos, const Board& board){
         bool changed=false;
         int i=pos.first, j=pos.second;
         for(auto [di,dj]: dij){
@@ -1218,12 +1283,12 @@ struct BoardSimulator {
             while(true){
                 i2+=di; j2+=dj;
                 if(i2<0||j2<0||i2>=n||j2>=n) break;
-                if(!revealed[i2][j2]){
-                    revealed[i2][j2]=1;
-                    new_revealed.emplace_back(i2,j2);
-                    if(!_is_passable(board_chars[i2][j2])) changed=true;
+                if(!revealed[i2*n + j2]){
+                    revealed[i2*n + j2]=1;
+                    new_revealed.emplace_back(i2*n + j2);
+                    if(!_is_passable(board.get_state(i2,j2))) changed=true;
                 }
-                if(!_is_passable(board_chars[i2][j2])) break;
+                if(!_is_passable(board.get_state(i2,j2))) break;
             }
         }
         return changed;
@@ -1231,50 +1296,53 @@ struct BoardSimulator {
 
     int simulate(const Board& board){
         boardPtr = &board;
-        board_chars.assign(n, vector<char>(n,'.'));
-        for(int i=0;i<n;i++) for(int j=0;j<n;j++) board_chars[i][j] = _board_to_char(board, i, j);
         p = {start_i, start_j};
         t = {ti, tj};
         target = {-1,-1};
-        revealed.assign(n, vector<char>(n,0));
-        revealed[start_i][start_j]=1;
-        new_revealed.clear(); new_revealed.emplace_back(start_i,start_j);
-        dist.assign(n, vector<int>(n, INT_MAX));
-        q = vector<pair<int,int>>(point_order.rbegin(), point_order.rend()); // reversed
+        revealed.assign(n*n, 0);
+        revealed[start_i*n + start_j]=1;
+        new_revealed.clear(); new_revealed.emplace_back(start_i*n + start_j);
+        dist.assign(n*n, INT_MAX);
+        q.clear();
+        q.reserve(point_order.size());
+        for(auto it = point_order.rbegin(); it != point_order.rend(); ++it) {
+            q.push_back(it->first*n + it->second);
+        }
         turn = 0;
 
-        _reveal_from_position(p);
+        _reveal_from_position(p, board);
 
         while(p != t){
-            if(!_step()) return 0;
+            if(!_step(board)) return 0;
         }
         return turn;
     }
 
-    bool _step(){
+    bool _step(const Board& board){
         new_revealed.clear();
         turn++;
 
         if(p==t) return false;
 
-        bool changed = _reveal_from_position(p);
+        bool changed = _reveal_from_position(p, board);
 
         if(changed){
-            auto old = target; target = {-1,-1}; _change_target(old);
+            auto old = target; target = {-1,-1}; _change_target(old, board);
         }
-        if(revealed[t.first][t.second]) _change_target(t);
+        if(revealed[t.first*n + t.second]) _change_target(t, board);
 
-        if(target.first!=-1 && dist[p.first][p.second]==INT_MAX){
+        if(target.first!=-1 && dist[p.first*n + p.second]==INT_MAX){
             target = {-1,-1};
         }
-        if(target.first==-1 || (target!=t && revealed[target.first][target.second])){
-            _change_target(p);
+        if(target.first==-1 || (target!=t && revealed[target.first*n + target.second])){
+            _change_target(p, board);
             while(true){
                 if(!q.empty()){
-                    auto targetCand = q.back(); q.pop_back();
-                    if(!revealed[targetCand.first][targetCand.second] &&
-                       dist[targetCand.first][targetCand.second]!=INT_MAX){
-                        _change_target(targetCand);
+                    auto targetCandIdx = q.back(); q.pop_back();
+                    if(!revealed[targetCandIdx] &&
+                       dist[targetCandIdx]!=INT_MAX){
+                        pair<int,int> targetCand = {targetCandIdx/n, targetCandIdx%n};
+                        _change_target(targetCand, board);
                         break;
                     }
                 }else return false;
@@ -1285,8 +1353,8 @@ struct BoardSimulator {
         for(int dir=0; dir<4; dir++){
             int i2 = p.first + dij[dir].first;
             int j2 = p.second + dij[dir].second;
-            if(i2>=0&&j2>=0&&i2<n&&j2<n && dist[i2][j2] < min_dist){
-                min_dist = dist[i2][j2]; next_dir = dir;
+            if(i2>=0&&j2>=0&&i2<n&&j2<n && dist[i2*n + j2] < min_dist){
+                min_dist = dist[i2*n + j2]; next_dir = dir;
             }
         }
         if(next_dir==-1) return false;
@@ -1325,11 +1393,12 @@ int main(){
 
     // Phase 1: 最初の1秒で候補ボードを生成
     vector<Board> board_candidates;
-    board_candidates.reserve(100); // 適切なサイズで予約
+    board_candidates.reserve(10000); // 適切なサイズで予約
 
     auto t0 = chrono::steady_clock::now();
-    const double PHASE1_LIMIT = 1.0; // seconds for candidate generation
-    const double TOTAL_LIMIT = 1.8;  // total time limit
+    const double PHASE1_LIMIT = 1.1; // seconds for candidate generation
+    const double PHASE2_LIMIT = 1.5; // seconds for candidate generation
+    const double TOTAL_LIMIT = 1.82;  // total time limit
     int edge_size;
 
     while(true){
@@ -1372,14 +1441,21 @@ int main(){
         int c = 0;
         while(true){
             if(c % 2 == 1) board.reverse_up_down();
-            auto res = constructor_3.construct(std::move(board), PATH);
+            if (c == 0){
+                start_i = rand() % (2*N/3) + N/6;
+            }else{
+                start_i = 0;
+            }
+
+            auto res = constructor_3.construct(std::move(board), PATH, start_i);
             board = std::move(res.first);
             if(c % 2 == 1) board.reverse_up_down();
-            c++;
             if(res.second) break;
+            c++;
             // Safety: prevent infinite loop just in case
             if(c > 2*N) break;
         }
+        if (c == 0) continue;
 
         board = constructor_4.construct(std::move(board));
         board = constructor_5.construct(std::move(board), true);
@@ -1398,7 +1474,14 @@ int main(){
     vector<tuple<int, int, int>> penalty_path_indices; // (penalty, -path_count, index)
     penalty_path_indices.reserve(board_candidates.size());
 
+    auto now = chrono::steady_clock::now();
+    double elapsed = chrono::duration<double>(now - t0).count();
+    cerr << "Phase 2 start time: " << elapsed << "\n";
+
     for(size_t i = 0; i < board_candidates.size(); i++){
+        now = chrono::steady_clock::now();
+        elapsed = chrono::duration<double>(now - t0).count();
+        if(elapsed >= PHASE2_LIMIT) break;
         int penalty = checker.check(board_candidates[i]);
         int path_count = 0;
         // PATHセルの数をカウント
@@ -1422,6 +1505,9 @@ int main(){
     int best_score = -1;
     optional<Board> best_board;
     int evaluated_count = 0;
+    now = chrono::steady_clock::now();
+    elapsed = chrono::duration<double>(now - t0).count();
+    cerr << "Phase 3 start time: " << elapsed << "\n";
 
     // 最小ペナルティを取得
     int min_penalty = penalty_path_indices.empty() ? INT_MAX : get<0>(penalty_path_indices[0]);
@@ -1433,7 +1519,7 @@ int main(){
 
         auto now = chrono::steady_clock::now();
         double elapsed = chrono::duration<double>(now - t0).count();
-        if(elapsed >= TOTAL_LIMIT) break;
+        if(elapsed >= TOTAL_LIMIT && evaluated_count > 0) break;
 
         const Board& board = board_candidates[idx];
 
